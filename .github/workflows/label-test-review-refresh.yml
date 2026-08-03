@@ -1,0 +1,24 @@
+name: Label Test Review Refresh
+
+on:
+  pull_request_review:
+    types:
+      - submitted
+      - edited
+      - dismissed
+
+permissions:
+  contents: read
+
+jobs:
+  refresh-label-test:
+    name: Refresh Label Test
+    permissions:
+      actions: write
+      contents: read
+    uses: Achrobat/Achrobat-Label-Sync/.github/workflows/96-refresh-label-test.yml@master
+    with:
+      label_sync_repository: Achrobat/Achrobat-Label-Sync
+      label_sync_ref: master
+      target_repository: ${{ github.repository }}
+      pull_request_number: ${{ github.event.pull_request.number }}
