@@ -1,0 +1,29 @@
+name: Label Test
+
+on:
+  pull_request_target:
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - labeled
+      - unlabeled
+      - review_requested
+      - ready_for_review
+
+permissions:
+  contents: read
+
+jobs:
+  label-test:
+    permissions:
+      contents: read
+      issues: read
+      pull-requests: read
+    uses: Achrobat/Achrobat-Label-Sync/.github/workflows/97-label-test.yml@master
+    with:
+      label_sync_repository: Achrobat/Achrobat-Label-Sync
+      label_sync_ref: master
+      target_repository: ${{ github.repository }}
+      pull_request_number: ${{ github.event.pull_request.number }}
+    secrets: inherit
